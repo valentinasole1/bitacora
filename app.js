@@ -671,7 +671,7 @@ function updateMineCount() {
 function renderMine() {
   const list = $('#mine-list');
   const statsEl = $('#mine-stats');
-  $('.export-row').hidden = reviews.length === 0;
+  $('#export-json').hidden = $('#export-md').hidden = reviews.length === 0;
 
   if (!reviews.length) {
     statsEl.textContent = '';
@@ -720,6 +720,26 @@ $('#export-md').onclick = async () => {
   ).join('\n\n---\n\n');
   await copyText(md);
   toast('Markdown copiado al portapapeles');
+};
+
+$('#import-json').onclick = () => {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'application/json';
+  input.onchange = async () => {
+    try {
+      const data = JSON.parse(await input.files[0].text());
+      if (!Array.isArray(data.reviews) || !Array.isArray(data.books)) throw new Error();
+      if (reviews.length && !confirm('Esto reemplaza tus reseñas actuales. ¿Continuar?')) return;
+      persist('brl.reviews', data.reviews);
+      persist('brl.books', data.books);
+      persist('brl.goal', data.goal ?? goal);
+      location.reload();
+    } catch {
+      toast('No pude leer ese archivo 😕');
+    }
+  };
+  input.click();
 };
 
 // ---------- init ----------
