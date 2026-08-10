@@ -35,20 +35,20 @@ persist('brl.books', books);
 const XP_BOOK = 100, XP_REVIEW = 25, XP_PUBLISH = 10, XP_PER_LEVEL = 300;
 
 const LEVELS = [
-  'Lector novato', 'Marcapáginas', 'Devorador de páginas', 'Ratón de biblioteca',
-  'Coleccionista de mundos', 'Crítico de culto', 'Bibliotecario legendario', 'Leyenda literaria',
+  'Novice Reader', 'Bookmark', 'Page Devourer', 'Bookworm',
+  'Collector of Worlds', 'Cult Critic', 'Legendary Librarian', 'Literary Legend',
 ];
 
 const ACHIEVEMENTS = [
-  { id: 'first-book', icon: '📖', name: 'Primera página', desc: 'Terminá tu primer libro', test: s => s.readAll >= 1 },
-  { id: 'first-review', icon: '✍️', name: 'Crítica literaria', desc: 'Escribí tu primera reseña', test: s => s.reviews >= 1 },
-  { id: 'five-year', icon: '📚', name: 'Maratonista', desc: '5 libros leídos en el año', test: s => s.readYear >= 5 },
-  { id: 'ten-year', icon: '🏛️', name: 'Biblioteca andante', desc: '10 libros leídos en el año', test: s => s.readYear >= 10 },
-  { id: 'goal', icon: '🏆', name: 'Meta cumplida', desc: 'Alcanzá tu meta anual', test: s => s.goal > 0 && s.readYear >= s.goal },
-  { id: 'publish', icon: '🌍', name: 'Al mundo', desc: 'Publicá una reseña en otro sitio', test: s => s.published >= 1 },
-  { id: 'streak3', icon: '🔥', name: 'En llamas', desc: 'Leé 3 meses seguidos', test: s => s.streak >= 3 },
-  { id: 'fivestar', icon: '⭐', name: 'Flechazo', desc: 'Regalá 5 estrellas', test: s => s.fiveStars >= 1 },
-  { id: 'tbr5', icon: '🗼', name: 'Pila peligrosa', desc: '5 libros esperando en la pila', test: s => s.tbr >= 5 },
+  { id: 'first-book', icon: '📖', name: 'First Page', desc: 'Finish your first book', test: s => s.readAll >= 1 },
+  { id: 'first-review', icon: '✍️', name: 'Literary Critic', desc: 'Write your first review', test: s => s.reviews >= 1 },
+  { id: 'five-year', icon: '📚', name: 'Marathoner', desc: 'Read 5 books in a year', test: s => s.readYear >= 5 },
+  { id: 'ten-year', icon: '🏛️', name: 'Walking Library', desc: 'Read 10 books in a year', test: s => s.readYear >= 10 },
+  { id: 'goal', icon: '🏆', name: 'Goal Reached', desc: 'Hit your yearly goal', test: s => s.goal > 0 && s.readYear >= s.goal },
+  { id: 'publish', icon: '🌍', name: 'Out in the World', desc: 'Publish a review on another site', test: s => s.published >= 1 },
+  { id: 'streak3', icon: '🔥', name: 'On Fire', desc: 'Read 3 months in a row', test: s => s.streak >= 3 },
+  { id: 'fivestar', icon: '⭐', name: 'Smitten', desc: 'Give a book 5 stars', test: s => s.fiveStars >= 1 },
+  { id: 'tbr5', icon: '🗼', name: 'Dangerous Pile', desc: '5 books waiting in your pile', test: s => s.tbr >= 5 },
 ];
 
 const ym = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
@@ -91,7 +91,7 @@ function checkAchievements(silent = false) {
   persist('brl.seenAch', seenAch);
   if (!silent) {
     confetti();
-    setTimeout(() => toast(`🏆 Logro desbloqueado: ${fresh.map(a => a.name).join(' · ')}`), 1400);
+    setTimeout(() => toast(`🏆 Achievement unlocked: ${fresh.map(a => a.name).join(' · ')}`), 1400);
   }
 }
 
@@ -183,7 +183,7 @@ async function copyText(text) {
   }
 }
 
-const fmtDate = iso => new Date(iso).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' });
+const fmtDate = iso => new Date(iso).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 
 const bookFields = b => ({
   key: b.key, title: b.title, author: b.author, year: b.year,
@@ -200,7 +200,7 @@ function setStatus(bookData, status) {
     if (b) {
       books = books.filter(x => x.key !== bookData.key);
       persist('brl.books', books);
-      toast('Sacado de la cartelera');
+      toast('Removed from your board');
     }
     return;
   }
@@ -213,11 +213,11 @@ function setStatus(bookData, status) {
   if (status === 'reading' && !b.startedAt) b.startedAt = new Date().toISOString();
   if (status === 'read') {
     if (!b.finishedAt) b.finishedAt = new Date().toISOString();
-    if (was !== 'read') { confetti(); toast(`🎉 ¡Libro terminado! +${XP_BOOK} XP`); }
+    if (was !== 'read') { confetti(); toast(`🎉 Book finished! +${XP_BOOK} XP`); }
   } else {
     delete b.finishedAt;
-    if (status === 'tbr') toast('Agregado a próximos a leer 📌');
-    if (status === 'reading') toast('¡A leer! 📖');
+    if (status === 'tbr') toast('Added to up next 📌');
+    if (status === 'reading') toast('Happy reading! 📖');
   }
   persist('brl.books', books);
   checkAchievements();
@@ -256,60 +256,60 @@ function renderBoard() {
   const expected = goal * dayOfYear / 365;
   const diff = s.readYear - expected;
   let pace = '';
-  if (s.readYear >= goal) pace = '🏆 ¡Meta cumplida!';
-  else if (diff >= 1) pace = `${Math.floor(diff)} ${Math.floor(diff) === 1 ? 'libro' : 'libros'} por delante del ritmo 💪`;
-  else if (diff <= -1) pace = `${Math.ceil(-diff)} ${Math.ceil(-diff) === 1 ? 'libro' : 'libros'} por detrás del ritmo`;
-  else pace = 'vas justo al ritmo ✨';
+  if (s.readYear >= goal) pace = '🏆 Goal reached!';
+  else if (diff >= 1) pace = `${Math.floor(diff)} ${Math.floor(diff) === 1 ? 'book' : 'books'} ahead of pace 💪`;
+  else if (diff <= -1) pace = `${Math.ceil(-diff)} ${Math.ceil(-diff) === 1 ? 'book' : 'books'} behind pace`;
+  else pace = 'right on pace ✨';
 
   const board = $('#view-board');
   board.innerHTML = `
     <div class="tiles">
       <div class="tile">
-        <div class="label">Meta ${s.year}</div>
-        <div class="value"><span id="goal-value">${s.readYear} / ${goal}</span><button class="icon-btn" id="goal-edit" title="Cambiar meta">✎</button></div>
+        <div class="label">${s.year} goal</div>
+        <div class="value"><span id="goal-value">${s.readYear} / ${goal}</span><button class="icon-btn" id="goal-edit" title="Change goal">✎</button></div>
         <div class="bar-outer"><div class="bar-inner" style="width:${Math.min(100, (s.readYear / goal) * 100)}%"></div></div>
         <div class="sub">${pace}</div>
       </div>
       <div class="tile">
-        <div class="label">Nivel ${level + 1}</div>
+        <div class="label">Level ${level + 1}</div>
         <div class="value">${LEVELS[level]}</div>
         <div class="bar-outer"><div class="bar-inner" style="width:${Math.min(100, (levelXp / XP_PER_LEVEL) * 100)}%"></div></div>
-        <div class="sub">${xp} XP${level < LEVELS.length - 1 ? ` · ${XP_PER_LEVEL - levelXp} para subir` : ' · nivel máximo'}</div>
+        <div class="sub">${xp} XP${level < LEVELS.length - 1 ? ` · ${XP_PER_LEVEL - levelXp} to level up` : ' · max level'}</div>
       </div>
       <div class="tile">
-        <div class="label">Racha</div>
+        <div class="label">Streak</div>
         <div class="value">${s.streak > 0 ? `🔥 ${s.streak}` : '—'}</div>
-        <div class="sub">${s.streak > 0 ? `${s.streak === 1 ? 'mes seguido' : 'meses seguidos'} leyendo` : 'terminá un libro este mes para encenderla'}</div>
+        <div class="sub">${s.streak > 0 ? `${s.streak === 1 ? 'month' : 'months'} in a row reading` : 'finish a book this month to light it up'}</div>
       </div>
     </div>
 
     ${s.reading.length ? `
-      <h3 class="section">Leyendo ahora</h3>
+      <h3 class="section">Reading now</h3>
       ${s.reading.map(b => shelfCard(b, `
-        <button class="ghost act-finish" data-key="${esc(b.key)}">Lo terminé 🎉</button>
-        <button class="icon-btn act-remove" data-key="${esc(b.key)}" title="Sacar">✕</button>`)).join('')}` : ''}
+        <button class="ghost act-finish" data-key="${esc(b.key)}">Finished it 🎉</button>
+        <button class="icon-btn act-remove" data-key="${esc(b.key)}" title="Remove">✕</button>`)).join('')}` : ''}
 
     ${s.tbrList.length ? `
-      <h3 class="section">Próximos a leer · ${s.tbr}</h3>
+      <h3 class="section">Up next · ${s.tbr}</h3>
       ${s.tbrList.map(b => shelfCard(b, `
-        <button class="ghost act-start" data-key="${esc(b.key)}">Empezar 📖</button>
-        <button class="icon-btn act-remove" data-key="${esc(b.key)}" title="Sacar">✕</button>`)).join('')}` : ''}
+        <button class="ghost act-start" data-key="${esc(b.key)}">Start 📖</button>
+        <button class="icon-btn act-remove" data-key="${esc(b.key)}" title="Remove">✕</button>`)).join('')}` : ''}
 
-    <h3 class="section">Leídos en ${s.year} · ${s.readYear}</h3>
+    <h3 class="section">Read in ${s.year} · ${s.readYear}</h3>
     ${readThisYear.length
       ? `<div class="cover-grid">${readThisYear.map(b =>
           `<button class="shelf-cover act-open" data-key="${esc(b.key)}" title="${esc(b.title)} · ${fmtDate(b.finishedAt)}">${coverHtml(b)}</button>`).join('')}</div>`
-      : `<div class="status">Todavía nada este año. ${books.length === 0 ? '' : '¡Dale que arranca la racha!'}</div>`}
-    ${s.readAll > s.readYear ? `<div class="source-note">+${s.readAll - s.readYear} de otros años</div>` : ''}
+      : `<div class="status">Nothing yet this year. ${books.length === 0 ? '' : 'Go get that streak started!'}</div>`}
+    ${s.readAll > s.readYear ? `<div class="source-note">+${s.readAll - s.readYear} from other years</div>` : ''}
 
     ${books.length === 0 ? `
       <div class="empty">
         <div class="big">🎮</div>
-        Tu cartelera está vacía.<br>Buscá un libro y sumalo como <b>próximo</b>, <b>leyendo</b> o <b>leído</b>.<br><br>
-        <button class="primary" id="board-cta">Buscar un libro</button>
+        Your board is empty.<br>Search for a book and add it as <b>up next</b>, <b>reading</b> or <b>read</b>.<br><br>
+        <button class="primary" id="board-cta">Search for a book</button>
       </div>` : ''}
 
-    <h3 class="section">Logros · ${ACHIEVEMENTS.filter(a => a.test(s)).length}/${ACHIEVEMENTS.length}</h3>
+    <h3 class="section">Achievements · ${ACHIEVEMENTS.filter(a => a.test(s)).length}/${ACHIEVEMENTS.length}</h3>
     <div class="ach-grid">
       ${ACHIEVEMENTS.map(a => `
         <div class="ach ${a.test(s) ? '' : 'locked'}">
@@ -357,7 +357,7 @@ const shelfCard = (b, actions) => `
     ${coverHtml(b)}
     <div class="info">
       <div class="title">${esc(b.title)}</div>
-      <div class="meta">${esc(b.author || '')}${b.startedAt && b.status === 'reading' ? ` · desde el ${fmtDate(b.startedAt)}` : ''}</div>
+      <div class="meta">${esc(b.author || '')}${b.startedAt && b.status === 'reading' ? ` · since ${fmtDate(b.startedAt)}` : ''}</div>
     </div>
     <div class="actions">${actions}</div>
   </div>`;
@@ -380,18 +380,18 @@ async function search(q) {
   if (q.length < 2) { $('#results').innerHTML = ''; $('#status').textContent = ''; return; }
 
   const token = ++searchToken;
-  $('#status').textContent = 'Buscando…';
+  $('#status').textContent = 'Searching…';
   try {
     const url = `${OL}/search.json?q=${encodeURIComponent(q)}&fields=key,title,author_name,first_publish_year,cover_i,isbn,ratings_average,ratings_count&limit=20`;
     const data = await fetch(url).then(r => r.json());
     if (token !== searchToken) return;
 
     if (!data.docs?.length) {
-      $('#status').textContent = 'No encontré nada con ese nombre.';
+      $('#status').textContent = "Couldn't find anything with that name.";
       $('#results').innerHTML = '';
       return;
     }
-    $('#status').textContent = `${data.numFound.toLocaleString('es-AR')} resultados`;
+    $('#status').textContent = `${data.numFound.toLocaleString('en-US')} results`;
     $('#results').innerHTML = data.docs.map((d, i) => {
       const rating = d.ratings_average
         ? ` · <span class="stars">${stars(d.ratings_average)}</span> ${d.ratings_average.toFixed(1)}`
@@ -400,7 +400,7 @@ async function search(q) {
         ${coverHtml({ coverId: d.cover_i })}
         <div class="info">
           <div class="title">${esc(d.title)}</div>
-          <div class="meta">${esc(d.author_name?.[0] || 'Autor desconocido')}${d.first_publish_year ? ` · ${d.first_publish_year}` : ''}${rating}</div>
+          <div class="meta">${esc(d.author_name?.[0] || 'Unknown author')}${d.first_publish_year ? ` · ${d.first_publish_year}` : ''}${rating}</div>
         </div>
       </div>`;
     }).join('');
@@ -422,7 +422,7 @@ async function search(q) {
       };
     });
   } catch {
-    if (token === searchToken) $('#status').textContent = 'Error buscando — revisá tu conexión.';
+    if (token === searchToken) $('#status').textContent = 'Search error — check your connection.';
   }
 }
 
@@ -434,7 +434,7 @@ async function openBook(book) {
   $('#status').textContent = '';
   const detail = $('#detail');
   detail.hidden = false;
-  detail.innerHTML = `<button class="back">← Volver</button><div class="status">Cargando libro…</div>`;
+  detail.innerHTML = `<button class="back">← Back</button><div class="status">Loading book…</div>`;
   $('.back', detail).onclick = closeDetail;
 
   const [work, ratings, gb] = await Promise.all([
@@ -481,39 +481,39 @@ function renderDetail(book, description, ratings, gb) {
   }
 
   const gbLine = gb?.averageRating
-    ? `<div class="source-note">Google Books: <span class="stars">${stars(gb.averageRating)}</span> ${gb.averageRating.toFixed(1)} (${gb.ratingsCount ?? '?'} puntuaciones)</div>`
+    ? `<div class="source-note">Google Books: <span class="stars">${stars(gb.averageRating)}</span> ${gb.averageRating.toFixed(1)} (${gb.ratingsCount ?? '?'} ratings)</div>`
     : '';
 
   detail.innerHTML = `
-    <button class="back">← Volver</button>
+    <button class="back">← Back</button>
     <div class="book-header">
       ${coverHtml(book)}
       <div>
         <h2>${esc(book.title)}</h2>
-        <div class="author">${esc(book.author || 'Autor desconocido')}${book.year ? ` · ${book.year}` : ''}</div>
-        ${avg ? `<div class="rating-line"><span class="stars">${stars(avg)}</span> ${avg.toFixed(1)} <span class="n">(${count ?? '?'} puntuaciones en Open Library)</span></div>` : ''}
+        <div class="author">${esc(book.author || 'Unknown author')}${book.year ? ` · ${book.year}` : ''}</div>
+        ${avg ? `<div class="rating-line"><span class="stars">${stars(avg)}</span> ${avg.toFixed(1)} <span class="n">(${count ?? '?'} ratings on Open Library)</span></div>` : ''}
         <div class="status-row" id="status-row">
-          <button data-s="tbr">📌 Próximo</button>
-          <button data-s="reading">📖 Leyendo</button>
-          <button data-s="read">✅ Leído</button>
+          <button data-s="tbr">📌 Up next</button>
+          <button data-s="reading">📖 Reading</button>
+          <button data-s="read">✅ Read</button>
         </div>
         <div class="source-note" id="status-note"></div>
       </div>
     </div>
 
     ${description ? `
-      <h3 class="section">Sobre el libro</h3>
+      <h3 class="section">About the book</h3>
       <p class="description clamped">${esc(description)}</p>
-      <button class="more">más</button>` : ''}
+      <button class="more">more</button>` : ''}
 
-    <h3 class="section">Qué dice la gente</h3>
-    ${histogram || `<div class="source-note">Sin puntuaciones en Open Library todavía.</div>`}
+    <h3 class="section">What people say</h3>
+    ${histogram || `<div class="source-note">No ratings on Open Library yet.</div>`}
     ${gbLine}
     <div class="pills">
-      ${READ_LINKS(book).map(l => `<a class="pill" href="${l.url}" target="_blank" rel="noopener">Reseñas en ${l.name} ↗</a>`).join('')}
+      ${READ_LINKS(book).map(l => `<a class="pill" href="${l.url}" target="_blank" rel="noopener">Reviews on ${l.name} ↗</a>`).join('')}
     </div>
 
-    <h3 class="section">Tu reseña</h3>
+    <h3 class="section">Your review</h3>
     <div id="my-review-area"></div>
   `;
 
@@ -524,7 +524,7 @@ function renderDetail(book, description, ratings, gb) {
     const p = $('.description', detail);
     moreBtn.onclick = () => {
       const clamped = p.classList.toggle('clamped');
-      moreBtn.textContent = clamped ? 'más' : 'menos';
+      moreBtn.textContent = clamped ? 'more' : 'less';
     };
   }
 
@@ -544,7 +544,7 @@ function bindStatusRow(book) {
     };
   });
   const note = $('#status-note');
-  note.textContent = entry?.status === 'read' && entry.finishedAt ? `Terminado el ${fmtDate(entry.finishedAt)}` : '';
+  note.textContent = entry?.status === 'read' && entry.finishedAt ? `Finished on ${fmtDate(entry.finishedAt)}` : '';
 }
 
 // ---------- tu reseña ----------
@@ -563,11 +563,11 @@ function renderMyReviewArea(book, editing = false) {
           <span class="date">${fmtDate(existing.updatedAt)}</span>
         </div>
         <div class="text">${esc(existing.text)}</div>
-        <div class="publish-label">Publicar en:</div>
+        <div class="publish-label">Publish on:</div>
         <div class="pills" id="publish-pills"></div>
         <div class="form-actions">
-          <button class="ghost" id="edit-review">Editar</button>
-          <button class="ghost danger" id="delete-review">Borrar</button>
+          <button class="ghost" id="edit-review">Edit</button>
+          <button class="ghost danger" id="delete-review">Delete</button>
         </div>
       </div>`;
     renderPublishPills($('#publish-pills'), existing, book);
@@ -577,7 +577,7 @@ function renderMyReviewArea(book, editing = false) {
       persist('brl.reviews', reviews);
       updateMineCount();
       renderMyReviewArea(book);
-      toast('Reseña borrada');
+      toast('Review deleted');
     };
     return;
   }
@@ -587,10 +587,10 @@ function renderMyReviewArea(book, editing = false) {
     <div class="star-input" id="star-input">
       ${[1, 2, 3, 4, 5].map(n => `<button type="button" data-n="${n}">★</button>`).join('')}
     </div>
-    <textarea id="review-text" placeholder="¿Qué te pareció?">${esc(existing?.text || '')}</textarea>
+    <textarea id="review-text" placeholder="What did you think?">${esc(existing?.text || '')}</textarea>
     <div class="form-actions">
-      <button class="primary" id="save-review">Guardar reseña</button>
-      ${existing ? '<button class="ghost" id="cancel-edit">Cancelar</button>' : ''}
+      <button class="primary" id="save-review">Save review</button>
+      ${existing ? '<button class="ghost" id="cancel-edit">Cancel</button>' : ''}
     </div>`;
 
   const paint = () => document.querySelectorAll('#star-input button').forEach(b =>
@@ -604,8 +604,8 @@ function renderMyReviewArea(book, editing = false) {
 
   $('#save-review').onclick = () => {
     const text = $('#review-text').value.trim();
-    if (!draftRating) { toast('Elegí una puntuación (las estrellas)'); return; }
-    if (!text) { toast('Escribí algo sobre el libro'); return; }
+    if (!draftRating) { toast('Pick a rating (the stars)'); return; }
+    if (!text) { toast('Write something about the book'); return; }
     const now = new Date().toISOString();
     if (existing) {
       Object.assign(existing, { rating: draftRating, text, updatedAt: now });
@@ -633,7 +633,7 @@ function renderMyReviewArea(book, editing = false) {
     updateMineCount();
     renderMyReviewArea(book);
     bindStatusRow(book);
-    toast(`Reseña guardada 📚 +${XP_REVIEW} XP`);
+    toast(`Review saved 📚 +${XP_REVIEW} XP`);
     checkAchievements();
   };
 }
@@ -653,7 +653,7 @@ function renderPublishPills(container, review, book) {
       if (!posted) review.postedTo.push(site.id);
       persist('brl.reviews', reviews);
       renderPublishPills(container, review, book);
-      toast(`Reseña copiada al portapapeles — pegala en ${site.name}`);
+      toast(`Review copied to clipboard — paste it on ${site.name}`);
       checkAchievements();
     };
     container.appendChild(btn);
@@ -675,12 +675,12 @@ function renderMine() {
 
   if (!reviews.length) {
     statsEl.textContent = '';
-    list.innerHTML = `<div class="empty"><div class="big">📚</div>Todavía no escribiste ninguna reseña.<br>Buscá un libro y contá qué te pareció.</div>`;
+    list.innerHTML = `<div class="empty"><div class="big">📚</div>You haven't written any reviews yet.<br>Search for a book and say what you thought.</div>`;
     return;
   }
 
   const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
-  statsEl.textContent = `${reviews.length} ${reviews.length === 1 ? 'reseña' : 'reseñas'} · promedio ${avg.toFixed(1)}★`;
+  statsEl.textContent = `${reviews.length} ${reviews.length === 1 ? 'review' : 'reviews'} · ${avg.toFixed(1)}★ average`;
 
   list.innerHTML = reviews.map((r, i) => `
     <div class="mine-item" data-i="${i}">
@@ -709,7 +709,7 @@ $('#export-json').onclick = () => {
   const blob = new Blob([JSON.stringify({ reviews, books, goal }, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'mi-bitacora.json';
+  a.download = 'my-reading-log.json';
   a.click();
   URL.revokeObjectURL(a.href);
 };
@@ -719,7 +719,7 @@ $('#export-md').onclick = async () => {
     `## ${r.title}${r.author ? ` — ${r.author}` : ''}\n${stars(r.rating)} (${r.rating}/5) · ${fmtDate(r.updatedAt)}\n\n${r.text}`
   ).join('\n\n---\n\n');
   await copyText(md);
-  toast('Markdown copiado al portapapeles');
+  toast('Markdown copied to clipboard');
 };
 
 $('#import-json').onclick = () => {
@@ -730,13 +730,13 @@ $('#import-json').onclick = () => {
     try {
       const data = JSON.parse(await input.files[0].text());
       if (!Array.isArray(data.reviews) || !Array.isArray(data.books)) throw new Error();
-      if (reviews.length && !confirm('Esto reemplaza tus reseñas actuales. ¿Continuar?')) return;
+      if (reviews.length && !confirm('This will replace your current reviews. Continue?')) return;
       persist('brl.reviews', data.reviews);
       persist('brl.books', data.books);
       persist('brl.goal', data.goal ?? goal);
       location.reload();
     } catch {
-      toast('No pude leer ese archivo 😕');
+      toast("Couldn't read that file 😕");
     }
   };
   input.click();

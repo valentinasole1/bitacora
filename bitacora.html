@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bitácora</title>
+  <title>Reading Log</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <div class="brand"><a href="index.html" title="Volver al archivo" style="text-decoration:none;margin-right:.35em">←</a>📖 Bitácora</div>
+    <div class="brand"><a href="index.html" title="Back to the site" style="text-decoration:none;margin-right:.35em">←</a>📖 Reading Log</div>
     <nav>
-      <button id="tab-board" class="tab active">Cartelera</button>
-      <button id="tab-search" class="tab">Buscar</button>
-      <button id="tab-mine" class="tab">Mis reseñas <span id="mine-count" class="count" hidden></span></button>
+      <button id="tab-board" class="tab active">Board</button>
+      <button id="tab-search" class="tab">Search</button>
+      <button id="tab-mine" class="tab">My reviews <span id="mine-count" class="count" hidden></span></button>
     </nav>
   </header>
 
@@ -21,7 +21,7 @@
 
     <section id="view-search" hidden>
       <form id="search-form">
-        <input id="search-input" type="search" placeholder="Buscá un libro por título, autor o ISBN…" autocomplete="off">
+        <input id="search-input" type="search" placeholder="Search for a book by title, author or ISBN…" autocomplete="off">
       </form>
       <div id="status" class="status"></div>
       <div id="results"></div>
@@ -31,9 +31,9 @@
     <section id="view-mine" hidden>
       <div id="mine-stats" class="status"></div>
       <div class="export-row">
-        <button id="export-json" class="ghost">Exportar JSON</button>
-        <button id="export-md" class="ghost">Copiar Markdown</button>
-        <button id="import-json" class="ghost">Importar JSON</button>
+        <button id="export-json" class="ghost">Export JSON</button>
+        <button id="export-md" class="ghost">Copy Markdown</button>
+        <button id="import-json" class="ghost">Import JSON</button>
       </div>
       <div id="mine-list"></div>
     </section>
