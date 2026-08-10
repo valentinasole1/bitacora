@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitácora</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="brand"><a href="index.html" title="Volver al archivo" style="text-decoration:none;margin-right:.35em">←</a>📖 Bitácora</div>
+    <nav>
+      <button id="tab-board" class="tab active">Cartelera</button>
+      <button id="tab-search" class="tab">Buscar</button>
+      <button id="tab-mine" class="tab">Mis reseñas <span id="mine-count" class="count" hidden></span></button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="view-board"></section>
+
+    <section id="view-search" hidden>
+      <form id="search-form">
+        <input id="search-input" type="search" placeholder="Buscá un libro por título, autor o ISBN…" autocomplete="off">
+      </form>
+      <div id="status" class="status"></div>
+      <div id="results"></div>
+      <div id="detail" hidden></div>
+    </section>
+
+    <section id="view-mine" hidden>
+      <div id="mine-stats" class="status"></div>
+      <div class="export-row">
+        <button id="export-json" class="ghost">Exportar JSON</button>
+        <button id="export-md" class="ghost">Copiar Markdown</button>
+      </div>
+      <div id="mine-list"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+  <script>
+    // dentro del iframe de index.html no hace falta la flecha para "volver"
+    if (window.self !== window.top) document.querySelector('.brand a')?.remove();
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>

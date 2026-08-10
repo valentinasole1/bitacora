@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muestras tipográficas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=IBM+Plex+Mono:wght@400;600&family=Courier+Prime:wght@400;700&family=Special+Elite&family=JetBrains+Mono:wght@400;700&family=Caveat:wght@400;600&family=Shadows+Into+Light&family=Patrick+Hand&family=Reenie+Beanie&family=Gochi+Hand&family=Archivo+Black&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #16130e;
+    color: #ddd4c0;
+    font-family: ui-monospace, Menlo, monospace;
+    padding: 40px clamp(20px, 5vw, 70px) 90px;
+  }
+  h1 { font-size: 1.1rem; letter-spacing: .25em; margin-bottom: 10px; }
+  .howto { font-size: .78rem; opacity: .7; line-height: 1.8; margin-bottom: 50px; max-width: 640px; }
+  h2 { font-size: .8rem; letter-spacing: .3em; margin: 55px 0 22px; opacity: .85; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 22px; }
+
+  .card {
+    background: #ddd4c0;
+    color: #2e2a20;
+    padding: 22px;
+    border-radius: 4px;
+  }
+  .card header {
+    font-size: .7rem;
+    letter-spacing: .12em;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 18px;
+    font-family: ui-monospace, Menlo, monospace;
+  }
+  .card header .tag {
+    background: #2e2a20;
+    color: #ddd4c0;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .card .demo * { font-family: var(--f); }
+
+  /* demo mono: pestaña + log + texto */
+  .chip {
+    display: inline-block;
+    border: 1px solid rgba(30,26,18,.4);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: .74rem;
+    letter-spacing: .14em;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .log { font-size: .78rem; opacity: .7; margin-bottom: 10px; letter-spacing: .04em; }
+  .body-copy { font-size: .9rem; line-height: 1.7; }
+
+  /* demo manuscrita: la nota */
+  .note {
+    background: #fbf7ec;
+    color: #3a3d8f;
+    padding: 18px 20px;
+    box-shadow: 2px 3px 8px rgba(0,0,0,.15);
+    transform: rotate(-1.2deg);
+    font-size: 1.15rem;
+    line-height: 1.8;
+  }
+  .note .title { border-bottom: 2px solid #3a3d8f; display: inline-block; margin-bottom: 8px; }
+
+  /* demo display: título de portada */
+  .cover-demo {
+    font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: .03em;
+  }
+  .cover-demo small { display: block; font-size: .55em; opacity: .6; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>MUESTRAS TIPOGRÁFICAS //</h1>
+<p class="howto">
+  Tres roles: <b>M</b> = la técnica (pestañas, etiquetas, estructura) · <b>H</b> = la manuscrita
+  (notas, polaroid, detalles) · <b>D</b> = el título grande de la portada.<br>
+  Elegí una de cada grupo y decime la combinación — ej: «M3 + H2 + D1».
+</p>
+
+<h2>M // TÉCNICA · MÁQUINA DE ESCRIBIR</h2>
+<div class="grid">
+  <article class="card" style="--f: ui-monospace, Menlo, monospace;">
+    <header><span class="tag">M0</span> La actual (mono del sistema)</header>
+    <div class="demo">
+      <div class="chip">FILE_01 // SOBRE MÍ</div>
+      <p class="log">LOG 003 // XP, niveles, rachas y logros</p>
+      <p class="body-copy">Registro de libros, reseñas y puntuaciones.</p>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Space Mono', monospace;">
+    <header><span class="tag">M1</span> Space Mono — editorial, con carácter</header>
+    <div class="demo">
+      <div class="chip">FILE_01 // SOBRE MÍ</div>
+      <p class="log">LOG 003 // XP, niveles, rachas y logros</p>
+      <p class="body-copy">Registro de libros, reseñas y puntuaciones.</p>
+    </div>
+  </article>
+  <article class="card" style="--f: 'IBM Plex Mono', monospace;">
+    <header><span class="tag">M2</span> IBM Plex Mono — limpia, moderna</header>
+    <div class="demo">
+      <div class="chip">FILE_01 // SOBRE MÍ</div>
+      <p class="log">LOG 003 // XP, niveles, rachas y logros</p>
+      <p class="body-copy">Registro de libros, reseñas y puntuaciones.</p>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Courier Prime', monospace;">
+    <header><span class="tag">M3</span> Courier Prime — máquina de escribir clásica</header>
+    <div class="demo">
+      <div class="chip">FILE_01 // SOBRE MÍ</div>
+      <p class="log">LOG 003 // XP, niveles, rachas y logros</p>
+      <p class="body-copy">Registro de libros, reseñas y puntuaciones.</p>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Special Elite', monospace;">
+    <header><span class="tag">M4</span> Special Elite — máquina de escribir entintada</header>
+    <div class="demo">
+      <div class="chip">FILE_01 // SOBRE MÍ</div>
+      <p class="log">LOG 003 // XP, niveles, rachas y logros</p>
+      <p class="body-copy">Registro de libros, reseñas y puntuaciones.</p>
+    </div>
+  </article>
+  <article class="card" style="--f: 'JetBrains Mono', monospace;">
+    <header><span class="tag">M5</span> JetBrains Mono — técnica, actual</header>
+    <div class="demo">
+      <div class="chip">FILE_01 // SOBRE MÍ</div>
+      <p class="log">LOG 003 // XP, niveles, rachas y logros</p>
+      <p class="body-copy">Registro de libros, reseñas y puntuaciones.</p>
+    </div>
+  </article>
+</div>
+
+<h2>H // MANUSCRITA · NOTAS</h2>
+<div class="grid">
+  <article class="card" style="--f: 'Bradley Hand', 'Comic Sans MS', cursive;">
+    <header><span class="tag">H0</span> La actual (Bradley Hand)</header>
+    <div class="demo">
+      <div class="note"><span class="title">SOBRE MÍ</span><br>• amante de los libros<br>• curiosa profesional<br>stay tuned for more!</div>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Caveat', cursive;">
+    <header><span class="tag">H1</span> Caveat — birome rápida, natural</header>
+    <div class="demo">
+      <div class="note"><span class="title">SOBRE MÍ</span><br>• amante de los libros<br>• curiosa profesional<br>stay tuned for more!</div>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Shadows Into Light', cursive;">
+    <header><span class="tag">H2</span> Shadows Into Light — finita, como tu referencia</header>
+    <div class="demo">
+      <div class="note"><span class="title">SOBRE MÍ</span><br>• amante de los libros<br>• curiosa profesional<br>stay tuned for more!</div>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Patrick Hand', cursive;">
+    <header><span class="tag">H3</span> Patrick Hand — prolija, redondeada</header>
+    <div class="demo">
+      <div class="note"><span class="title">SOBRE MÍ</span><br>• amante de los libros<br>• curiosa profesional<br>stay tuned for more!</div>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Reenie Beanie', cursive;">
+    <header><span class="tag">H4</span> Reenie Beanie — birome despeinada</header>
+    <div class="demo">
+      <div class="note"><span class="title">SOBRE MÍ</span><br>• amante de los libros<br>• curiosa profesional<br>stay tuned for more!</div>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Gochi Hand', cursive;">
+    <header><span class="tag">H5</span> Gochi Hand — juvenil, marcador</header>
+    <div class="demo">
+      <div class="note"><span class="title">SOBRE MÍ</span><br>• amante de los libros<br>• curiosa profesional<br>stay tuned for more!</div>
+    </div>
+  </article>
+</div>
+
+<h2>D // TÍTULO DE PORTADA</h2>
+<div class="grid">
+  <article class="card" style="--f: ui-monospace, Menlo, monospace;">
+    <header><span class="tag">D0</span> La actual (misma mono, bold)</header>
+    <div class="demo">
+      <p class="cover-demo" style="font-weight:700">ARCHIVO<br>PERSONAL_01–05<small>FILE_00//</small></p>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Archivo Black', sans-serif;">
+    <header><span class="tag">D1</span> Archivo Black — pesada, de catálogo</header>
+    <div class="demo">
+      <p class="cover-demo">ARCHIVO<br>PERSONAL_01–05<small>FILE_00//</small></p>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Bebas Neue', sans-serif;">
+    <header><span class="tag">D2</span> Bebas Neue — condensada, de póster</header>
+    <div class="demo">
+      <p class="cover-demo">ARCHIVO<br>PERSONAL_01–05<small>FILE_00//</small></p>
+    </div>
+  </article>
+  <article class="card" style="--f: 'Special Elite', monospace;">
+    <header><span class="tag">D3</span> Special Elite — todo máquina de escribir</header>
+    <div class="demo">
+      <p class="cover-demo">ARCHIVO<br>PERSONAL_01–05<small>FILE_00//</small></p>
+    </div>
+  </article>
+</div>
+
+</body>
+</html>
