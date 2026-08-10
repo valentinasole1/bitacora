@@ -7,492 +7,432 @@
 <title>Valentina</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Poppins:wght@300;400;500&family=Caveat:wght@500;600&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #111;
-    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
-    --display: "Archivo Black", "Arial Black", sans-serif;
-    --pen: #3a3d8f;
+    --dark: #2d2c2a;
+    --cream: #eae6df;
+    --cream-2: #e4e0d8;
+    --ink: #1c1b19;
+    --ink-soft: #4a4844;
+    --peri: #8b95f6;
+    --peri-deep: #707de8;
+    --hair: rgba(28, 27, 25, .18);
+    --hair-light: rgba(241, 238, 232, .25);
+    --serif: "Playfair Display", Georgia, serif;
+    --sans: "Poppins", "Helvetica Neue", sans-serif;
+    --hand: "Caveat", cursive;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    background: #fff;
+    background: var(--cream);
     color: var(--ink);
-    font-family: var(--mono);
+    font-family: var(--sans);
+    font-weight: 300;
     min-height: 100dvh;
   }
+  ::selection { background: var(--peri); color: #fff; }
 
-  header {
-    padding: 34px 20px 26px;
-    font-size: .7rem;
-    letter-spacing: .3em;
-    text-transform: uppercase;
-    text-align: center;
-  }
-
-  /* ── filas acordeón ────────────────────────────────────── */
-  .row::before {
-    content: "";
-    display: block;
-    width: min(420px, 62vw);
-    height: 1px;
-    margin: 0 auto;
-    background: #d6d6d6;
-  }
-  .row:last-of-type::after {
-    content: "";
-    display: block;
-    width: min(420px, 62vw);
-    height: 1px;
-    margin: 0 auto;
-    background: #d6d6d6;
-  }
-  .row-head {
-    width: 100%;
+  /* ── top nav ───────────────────────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
     display: flex;
-    justify-content: center;
-    padding: 42px 20px;
-    background: transparent;
-    border: 0;
+    background: var(--dark);
+    color: #efece5;
+    border-bottom: 1px solid var(--hair-light);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a {
+    flex: 1;
+    text-align: center;
+    padding: 17px 18px 15px;
     color: inherit;
-    font-family: var(--mono);
-    cursor: pointer;
-  }
-  .row-head:focus-visible { outline: 2px solid var(--ink); outline-offset: -6px; }
-  .row-head .name {
-    font-weight: 300;
-    font-size: clamp(1.4rem, 3.8vw, 2.2rem);
+    text-decoration: none;
+    font-size: .66rem;
+    letter-spacing: .22em;
     text-transform: uppercase;
-    letter-spacing: .2em;
-    line-height: 1;
-    text-shadow: 0 12px 16px rgba(0, 0, 0, .14);
-    animation: floaty 5.5s ease-in-out infinite;
-    transition: letter-spacing .35s, opacity .35s;
+    white-space: nowrap;
+    transition: color .25s;
   }
-  .row-head:hover .name { letter-spacing: .26em; opacity: .65; }
-  .row:nth-of-type(2) .name { animation-delay: -1.2s; }
-  .row:nth-of-type(3) .name { animation-delay: -2.4s; }
-  .row:nth-of-type(4) .name { animation-delay: -3.6s; }
-  .row:nth-of-type(5) .name { animation-delay: -4.8s; }
-  @keyframes floaty {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-7px); }
-  }
+  nav a + a { border-left: 1px solid var(--hair-light); }
+  nav a:hover { color: var(--peri); }
 
-  .row-body {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows .55s cubic-bezier(.33, .08, .18, 1);
-  }
-  .row.open .row-body { grid-template-rows: 1fr; }
-  .row-clip { overflow: hidden; min-height: 0; }
-  .row-inner {
-    padding: 12px clamp(20px, 5vw, 60px) 70px;
-    max-width: 980px;
-    margin: 0 auto;
-  }
-  .row-inner.embed { max-width: none; padding: 0; }
-  .center { text-align: center; margin-top: 26px; }
+  section { scroll-margin-top: 58px; }
 
-  /* ── sobre mí ──────────────────────────────────────────── */
-  .about { display: flex; flex-wrap: wrap; gap: 44px; align-items: flex-start; justify-content: center; padding-top: 16px; }
-  .torn-note {
+  /* ── hero ──────────────────────────────────────────────── */
+  .hero {
+    background: var(--dark);
+    color: #f1eee8;
+    padding: clamp(70px, 12vh, 130px) 24px clamp(80px, 13vh, 140px);
+    text-align: center;
     position: relative;
-    background: #fbf7ec;
-    color: var(--pen);
-    font-size: .88rem;
-    line-height: 2;
-    padding: 40px 34px 46px;
-    max-width: 320px;
-    transform: rotate(-2deg);
-    box-shadow: 3px 5px 14px rgba(0,0,0,.15);
-    clip-path: polygon(2% 1%, 12% 0%, 24% 2%, 37% 0%, 52% 2%, 66% 0%, 79% 2%, 91% 0%, 99% 3%, 100% 14%, 98% 27%, 100% 41%, 98% 55%, 100% 68%, 99% 82%, 100% 93%, 92% 100%, 79% 98%, 64% 100%, 49% 98%, 34% 100%, 20% 98%, 8% 100%, 1% 97%, 0% 84%, 2% 70%, 0% 55%, 2% 40%, 0% 26%, 2% 12%);
+    overflow: hidden;
   }
-  .torn-note .clip {
-    position: absolute; top: -18px; right: 34px;
-    font-size: 2rem;
-    transform: rotate(12deg);
-    filter: grayscale(1);
+  .hero-inner { position: relative; display: inline-block; }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(3.4rem, 13vw, 8rem);
+    line-height: 1.05;
+    letter-spacing: .01em;
   }
-  .torn-note h3 {
-    font-size: 1rem;
-    letter-spacing: .16em;
-    border-bottom: 2px solid var(--pen);
+  .o-year {
     display: inline-block;
-    margin-bottom: 18px;
+    position: relative;
+    width: .58em; height: .58em;
+    border: .026em solid currentColor;
+    border-radius: 50%;
+    margin: 0 .02em;
   }
-  .torn-note ul { list-style: none; }
-  .torn-note li::before { content: "• "; }
-  .torn-note li.gap { visibility: hidden; height: .9em; }
-  .torn-note .still { margin-top: 20px; letter-spacing: .06em; }
+  .o-year .yr {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+  }
+  .o-year .yr span {
+    display: block;
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: .14em;
+    letter-spacing: .12em;
+    line-height: 1.25;
+  }
+  .cv {
+    font-family: var(--hand);
+    font-size: .2em;
+    color: var(--peri);
+    vertical-align: super;
+    margin-left: .18em;
+  }
+  .scribble-name {
+    position: absolute;
+    top: -2.6em;
+    right: -1em;
+    font-family: var(--hand);
+    font-weight: 600;
+    font-size: clamp(1.3rem, 3.4vw, 1.9rem);
+    color: var(--peri);
+    white-space: nowrap;
+    transform: rotate(-4deg);
+  }
+  .scribble-name svg {
+    position: absolute;
+    left: -2.6em;
+    top: .75em;
+    width: 2.3em;
+    transform: rotate(8deg);
+  }
+  .pill {
+    display: inline-block;
+    margin-top: 34px;
+    font-size: clamp(.8rem, 1.8vw, .95rem);
+    font-weight: 400;
+    letter-spacing: .08em;
+    padding: 10px 26px;
+    border: 2px solid var(--peri);
+    border-radius: 50%/ 46%;
+    transform: rotate(-2deg);
+    color: #f1eee8;
+  }
+  .spark { position: absolute; color: var(--peri); pointer-events: none; }
+  .spark svg { width: 100%; height: 100%; display: block; }
+  .s1 { width: 22px; top: -3.4em; left: 4%; }
+  .s2 { width: 13px; top: -1.6em; right: -2.2em; color: #f1eee8; opacity: .8; }
+  .s3 { width: 16px; bottom: -2.2em; left: -2.4em; }
+  .s4 { width: 11px; bottom: -3.1em; right: 10%; color: #f1eee8; opacity: .65; }
 
-  .polaroid {
-    background: #fff;
-    padding: 12px 12px 16px;
-    width: 265px;
-    transform: rotate(2.2deg);
-    box-shadow: 0 3px 18px rgba(0,0,0,.18);
+  /* ── sections ──────────────────────────────────────────── */
+  .band { padding: clamp(64px, 10vh, 110px) 24px; border-top: 1px solid var(--hair); }
+  .band.alt { background: var(--cream-2); }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2.3rem, 6vw, 3.4rem);
+    margin-bottom: .6em;
   }
-  .polaroid .photo {
+  .u { border-bottom: 1.5px solid var(--peri); padding-bottom: 1px; }
+  .hand-note { font-family: var(--hand); color: var(--peri-deep); font-size: 1.25rem; }
+
+  /* ── about ─────────────────────────────────────────────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(280px, 1.15fr);
+    gap: clamp(40px, 7vw, 80px);
+    align-items: center;
+  }
+  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+  .photo-cluster { position: relative; display: grid; place-items: center; padding: 56px 30px; }
+  .photo-oval {
+    width: min(230px, 60vw);
     aspect-ratio: 3 / 4;
-    background: linear-gradient(160deg, #e4e1da, #a09a8e 70%, #7c766b);
+    border-radius: 50%;
+    background: linear-gradient(160deg, #d9d5cc, #96917f 70%, #6f6a5e);
     display: grid;
     place-items: center;
-    color: #f7f4ec;
-    font-size: .85rem;
+    color: #f4f1e9;
+    font-size: .8rem;
+    filter: grayscale(1);
+    position: relative;
+    z-index: 1;
   }
-  .polaroid figcaption {
-    color: var(--pen);
-    text-align: right;
-    padding-top: 10px;
-    font-size: .78rem;
+  .orbit {
+    position: absolute;
+    inset: 0;
+    color: var(--peri);
+    pointer-events: none;
   }
+  .orbit svg { width: 100%; height: 100%; display: block; }
+  .trait {
+    position: absolute;
+    font-family: var(--hand);
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--peri-deep);
+    white-space: nowrap;
+    z-index: 2;
+  }
+  .t1 { top: 16px; left: 4%; transform: rotate(-6deg); }
+  .t2 { top: 34%; right: -2%; transform: rotate(4deg); }
+  .t3 { bottom: 42px; left: 2%; transform: rotate(-3deg); }
+  .t4 { bottom: -2px; right: 8%; transform: rotate(3deg); }
+  .about-text p { line-height: 2.05; font-size: .92rem; color: var(--ink-soft); }
+  .about-text p + p { margin-top: 1.1em; }
 
-  /* ── curriculum ────────────────────────────────────────── */
+  /* ── resume ────────────────────────────────────────────── */
+  .cv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 26px;
+    margin-top: 10px;
+  }
   .cv-block {
-    border: 1.5px dashed rgba(0, 0, 0, .35);
-    border-radius: 4px;
-    padding: 20px 22px;
-    margin: 16px auto 22px;
-    max-width: 640px;
+    border: 1.5px dashed rgba(28, 27, 25, .35);
+    border-radius: 6px;
+    padding: 22px 24px 26px;
+    background: rgba(255, 255, 255, .25);
   }
-  .cv-block + .cv-block { margin-top: 0; }
-  .cv-block h3 { font-size: .8rem; letter-spacing: .2em; margin-bottom: 14px; }
-  .ghost-line {
-    height: 10px;
-    background: currentColor;
-    opacity: .1;
-    border-radius: 3px;
-    margin: 10px 0;
+  .cv-block h3 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: .74rem;
+    letter-spacing: .22em;
+    margin-bottom: 16px;
   }
+  .ghost-line { height: 9px; background: currentColor; opacity: .09; border-radius: 3px; margin: 10px 0; }
   .ghost-line.short { width: 55%; }
-
   .stamp {
     display: inline-block;
-    border: 2.5px solid #b23a2c;
-    color: #b23a2c;
-    padding: 8px 16px;
-    font-weight: 700;
-    letter-spacing: .24em;
-    font-size: .78rem;
-    transform: rotate(-7deg);
-    border-radius: 3px;
-    opacity: .85;
-    margin-top: 14px;
+    border: 2px solid var(--peri);
+    color: var(--peri-deep);
+    padding: 9px 22px;
+    font-weight: 400;
+    letter-spacing: .2em;
+    font-size: .72rem;
+    text-transform: uppercase;
+    transform: rotate(-4deg);
+    border-radius: 50% / 48%;
+    margin-top: 34px;
   }
+  .center { text-align: center; }
 
-  /* ── redes ─────────────────────────────────────────────── */
-  .socials {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-    padding-top: 20px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .social-card {
-    position: relative;
-    background: #fff;
-    color: var(--ink);
-    padding: 26px 20px 20px;
-    box-shadow: 0 2px 14px rgba(0,0,0,.14);
+  /* ── socials ───────────────────────────────────────────── */
+  .social-list { margin-top: 6px; }
+  .social-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 22px 4px;
+    border-top: 1px solid var(--hair);
     text-decoration: none;
-    display: block;
+    color: inherit;
   }
-  .social-card:nth-child(odd) { transform: rotate(-1.6deg); }
-  .social-card:nth-child(even) { transform: rotate(1.8deg); }
-  .social-card::before {
-    content: "";
-    position: absolute; top: -12px; left: 50%;
-    transform: translateX(-50%) rotate(-3deg);
-    width: 82px; height: 24px;
-    background: rgba(240, 238, 230, .8);
-    border: 1px solid rgba(0,0,0,.06);
+  .social-row:last-child { border-bottom: 1px solid var(--hair); }
+  .social-row .net {
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    transition: color .25s;
   }
-  .social-card .net { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; opacity: .6; }
-  .social-card .handle { font-size: .95rem; font-weight: 600; color: var(--pen); margin-top: 8px; }
+  .social-row .handle {
+    font-family: var(--hand);
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--peri-deep);
+    white-space: nowrap;
+  }
+  .social-row .go { font-size: .95rem; color: var(--ink-soft); transition: transform .25s; }
+  .social-row:hover .net { color: var(--peri-deep); }
+  .social-row:hover .go { transform: translate(3px, -3px); }
 
-  /* ── bitácora (embebida) ───────────────────────────────── */
+  /* ── reading log ───────────────────────────────────────── */
   .log-frame {
     display: block;
     width: 100%;
-    height: 76vh;
-    border: 0;
-    border-top: 1px solid rgba(0, 0, 0, .15);
+    height: 80vh;
+    border: 1px solid var(--hair);
+    border-radius: 10px;
+    background: #faf6f0;
+    margin-top: 28px;
   }
 
-  /* ── juego ─────────────────────────────────────────────── */
-  .press-start { font-size: 1.5rem; letter-spacing: .3em; margin: 30px 0 8px; text-align: center; }
+  /* ── game ──────────────────────────────────────────────── */
+  .band.dark {
+    background: var(--dark);
+    color: #f1eee8;
+    border-top: 0;
+    text-align: center;
+  }
+  .press-start { font-family: var(--mono); font-size: 1.4rem; letter-spacing: .3em; margin: 34px 0 10px; }
   .cursor {
     display: inline-block; width: .6em; height: 1.1em;
     background: currentColor; vertical-align: text-bottom;
     animation: blink 1.05s steps(1) infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
-  .game-note { font-size: .9rem; margin: 26px auto 0; max-width: 460px; line-height: 1.8; text-align: center; }
+  .game-note { font-size: .88rem; margin: 22px auto 0; max-width: 460px; line-height: 2; color: #c9c5bc; }
+  .band.dark .stamp { color: var(--peri); }
 
-  /* ── 🐞 el bicho navegador ─────────────────────────────── */
-  #bug {
-    position: fixed;
-    left: 0; top: 0;
-    font-size: 34px;
-    line-height: 1;
-    z-index: 60;
-    pointer-events: none;
-    filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, .25));
-    will-change: transform;
-  }
-  #bug span {
-    display: block;
-    animation: walk .3s infinite;
-    animation-play-state: paused;
-  }
-  #bug.walking span { animation-play-state: running; }
-  @keyframes walk {
-    0%, 100% { transform: rotate(-7deg); }
-    50% { transform: rotate(7deg); }
-  }
-  #bug-hint {
-    position: fixed;
-    bottom: 16px; left: 50%;
-    transform: translateX(-50%);
-    color: #999;
+  footer {
+    background: var(--dark);
+    color: #8f8b83;
+    text-align: center;
+    padding: 26px 20px 34px;
     font-size: .64rem;
-    letter-spacing: .2em;
-    z-index: 60;
-    opacity: .9;
-    transition: opacity .6s;
+    letter-spacing: .24em;
     text-transform: uppercase;
-    white-space: nowrap;
+    border-top: 1px solid var(--hair-light);
   }
-  #bug-hint.gone { opacity: 0; }
-
-  @media (max-width: 760px) {
-    .row-head { padding: 22px 20px; }
-    .log-frame { height: 82vh; }
-    #bug, #bug-hint { display: none; }
-  }
+  footer .fs { color: var(--peri); }
 
   @media (prefers-reduced-motion: reduce) {
-    .row-body, .row-head .name { transition: none; }
-    .cursor, #bug span, .row-head .name { animation: none; }
+    html { scroll-behavior: auto; }
+    .cursor { animation: none; }
   }
 </style>
 </head>
 <body>
 
-<header>Valentina</header>
+<nav aria-label="Sections">
+  <a href="#about">About me</a>
+  <a href="#resume">Resume</a>
+  <a href="#socials">Socials</a>
+  <a href="#reading-log">Reading log</a>
+  <a href="#game">Game</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="scribble-name" aria-hidden="true">
+      <svg viewBox="0 0 90 60" fill="none" aria-hidden="true"><path d="M6 52 C 22 40, 40 16, 74 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M62 8 L 76 11 L 66 22" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      Valentina Sole
+    </span>
+    <span class="spark s1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c1 7.5 4.5 11 12 12-7.5 1-11 4.5-12 12-1-7.5-4.5-11-12-12C7.5 11 11 7.5 12 0Z"/></svg></span>
+    <span class="spark s2" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c1 7.5 4.5 11 12 12-7.5 1-11 4.5-12 12-1-7.5-4.5-11-12-12C7.5 11 11 7.5 12 0Z"/></svg></span>
+    <span class="spark s3" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c1 7.5 4.5 11 12 12-7.5 1-11 4.5-12 12-1-7.5-4.5-11-12-12C7.5 11 11 7.5 12 0Z"/></svg></span>
+    <span class="spark s4" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c1 7.5 4.5 11 12 12-7.5 1-11 4.5-12 12-1-7.5-4.5-11-12-12C7.5 11 11 7.5 12 0Z"/></svg></span>
+    <h1 aria-label="Portfolio"><span aria-hidden="true">Portf<span class="o-year"><span class="yr"><span>20</span><span>26</span></span></span>lio<span class="cv">cv</span></span></h1>
+    <div><span class="pill">professionally curious</span></div>
+  </div>
+</header>
 
 <main>
 
   <!-- ABOUT ME -->
-  <section class="row open" id="sobre-mi">
-    <button class="row-head" aria-expanded="true" aria-controls="body-sobre-mi">
-      <span class="name">About me</span>
-    </button>
-    <div class="row-body" id="body-sobre-mi">
-      <div class="row-clip">
-        <div class="row-inner">
-          <div class="about">
-            <div class="torn-note">
-              <span class="clip" aria-hidden="true">📎</span>
-              <h3>ABOUT ME</h3>
-              <ul>
-                <li>Valentina</li>
-                <li>[your role / what you do]</li>
-                <li>based in [your city]</li>
-                <li class="gap">·</li>
-                <li>book lover</li>
-                <li>professionally curious</li>
-                <li>always learning</li>
-              </ul>
-              <p class="still">and still building…</p>
-            </div>
-            <figure class="polaroid">
-              <div class="photo">your photo here ✎</div>
-              <figcaption>stay tuned for more!</figcaption>
-            </figure>
-          </div>
-        </div>
+  <section class="band" id="about">
+    <div class="wrap about-grid">
+      <div class="photo-cluster">
+        <span class="orbit" aria-hidden="true">
+          <svg viewBox="0 0 300 380" fill="none" preserveAspectRatio="none"><ellipse cx="150" cy="190" rx="146" ry="96" stroke="currentColor" stroke-width="1.6" transform="rotate(-18 150 190)"/><ellipse cx="150" cy="190" rx="150" ry="74" stroke="currentColor" stroke-width="1.2" opacity=".55" transform="rotate(14 150 190)"/></svg>
+        </span>
+        <div class="photo-oval">your photo here ✎</div>
+        <span class="trait t1">book lover ✦</span>
+        <span class="trait t2">always learning</span>
+        <span class="trait t3">✦ professionally curious</span>
+        <span class="trait t4">still building…</span>
+      </div>
+      <div class="about-text">
+        <h2>About me,</h2>
+        <p>I'm Valentina — [your role / what you do], based in [your city]. I like understanding how things work, <span class="u">and then making them work better</span>.</p>
+        <p>Off the clock you'll usually find me with a book — the <a class="u" href="#reading-log" style="color:inherit;text-decoration:none">reading log below</a> keeps the receipts. <span class="u">I believe continuous learning is the key</span>, and this site is my little corner to practice it: part portfolio, part playground, always under construction.</p>
       </div>
     </div>
   </section>
 
   <!-- RESUME -->
-  <section class="row" id="curriculum">
-    <button class="row-head" aria-expanded="false" aria-controls="body-curriculum">
-      <span class="name">Resume</span>
-    </button>
-    <div class="row-body" id="body-curriculum">
-      <div class="row-clip">
-        <div class="row-inner">
-          <div class="cv-block">
-            <h3>EXPERIENCE_</h3>
-            <div class="ghost-line"></div>
-            <div class="ghost-line short"></div>
-            <div class="ghost-line"></div>
-          </div>
-          <div class="cv-block">
-            <h3>EDUCATION_</h3>
-            <div class="ghost-line short"></div>
-            <div class="ghost-line"></div>
-          </div>
-          <div class="cv-block">
-            <h3>SKILLS_</h3>
-            <div class="ghost-line"></div>
-            <div class="ghost-line short"></div>
-          </div>
-          <p class="center"><span class="stamp">UNDER CONSTRUCTION</span></p>
+  <section class="band alt" id="resume">
+    <div class="wrap">
+      <h2>Resume</h2>
+      <p class="hand-note">the official story — coming soon ✦</p>
+      <div class="cv-grid">
+        <div class="cv-block">
+          <h3>EXPERIENCE_</h3>
+          <div class="ghost-line"></div>
+          <div class="ghost-line short"></div>
+          <div class="ghost-line"></div>
+        </div>
+        <div class="cv-block">
+          <h3>EDUCATION_</h3>
+          <div class="ghost-line short"></div>
+          <div class="ghost-line"></div>
+        </div>
+        <div class="cv-block">
+          <h3>SKILLS_</h3>
+          <div class="ghost-line"></div>
+          <div class="ghost-line short"></div>
         </div>
       </div>
+      <p class="center"><span class="stamp">under construction</span></p>
     </div>
   </section>
 
   <!-- SOCIALS -->
-  <section class="row" id="redes">
-    <button class="row-head" aria-expanded="false" aria-controls="body-redes">
-      <span class="name">Socials</span>
-    </button>
-    <div class="row-body" id="body-redes">
-      <div class="row-clip">
-        <div class="row-inner">
-          <div class="socials">
-            <a class="social-card" href="https://www.instagram.com/valensole_/" target="_blank" rel="noopener">
-              <p class="net">Instagram</p>
-              <p class="handle">@valensole_</p>
-            </a>
-            <a class="social-card" href="https://github.com/valentinasole1" target="_blank" rel="noopener">
-              <p class="net">GitHub</p>
-              <p class="handle">@valentinasole1</p>
-            </a>
-            <a class="social-card" href="https://www.linkedin.com/in/valentinasole/" target="_blank" rel="noopener">
-              <p class="net">LinkedIn</p>
-              <p class="handle">/valentinasole</p>
-            </a>
-          </div>
-        </div>
+  <section class="band" id="socials">
+    <div class="wrap">
+      <h2>Socials</h2>
+      <div class="social-list">
+        <a class="social-row" href="https://www.instagram.com/valensole_/" target="_blank" rel="noopener">
+          <span class="net">Instagram</span><span class="handle">@valensole_</span><span class="go">↗</span>
+        </a>
+        <a class="social-row" href="https://github.com/valentinasole1" target="_blank" rel="noopener">
+          <span class="net">GitHub</span><span class="handle">@valentinasole1</span><span class="go">↗</span>
+        </a>
+        <a class="social-row" href="https://www.linkedin.com/in/valentinasole/" target="_blank" rel="noopener">
+          <span class="net">LinkedIn</span><span class="handle">/valentinasole</span><span class="go">↗</span>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- READING LOG -->
-  <section class="row" id="bitacora">
-    <button class="row-head" aria-expanded="false" aria-controls="body-bitacora">
-      <span class="name">Reading log</span>
-    </button>
-    <div class="row-body" id="body-bitacora">
-      <div class="row-clip">
-        <div class="row-inner embed">
-          <iframe class="log-frame" title="Reading log" data-src="bitacora.html"></iframe>
-        </div>
-      </div>
+  <section class="band alt" id="reading-log">
+    <div class="wrap">
+      <h2>Reading log</h2>
+      <p class="hand-note">levels, streaks &amp; honest reviews ✦</p>
+      <iframe class="log-frame" title="Reading log" src="bitacora.html" loading="lazy"></iframe>
     </div>
   </section>
 
   <!-- GAME -->
-  <section class="row" id="juego">
-    <button class="row-head" aria-expanded="false" aria-controls="body-juego">
-      <span class="name">Game</span>
-    </button>
-    <div class="row-body" id="body-juego">
-      <div class="row-clip">
-        <div class="row-inner">
-          <p class="press-start">PRESS START<span class="cursor" aria-hidden="true"></span></p>
-          <p class="game-note">a game will live here. we haven't picked one yet — something with books? a puzzle? ideas welcome ✎</p>
-          <p class="center"><span class="stamp">UNDER CONSTRUCTION</span></p>
-        </div>
-      </div>
+  <section class="band dark" id="game">
+    <div class="wrap">
+      <h2>Game</h2>
+      <p class="press-start">PRESS START<span class="cursor" aria-hidden="true"></span></p>
+      <p class="game-note">a game will live here. we haven't picked one yet — something with books? a puzzle? ideas welcome ✎</p>
+      <p class="center"><span class="stamp">under construction</span></p>
     </div>
   </section>
 
 </main>
 
-<div id="bug" aria-hidden="true"><span>🐞</span></div>
-<p id="bug-hint" aria-hidden="true">use the arrow keys · walk the bug onto a title</p>
-
-<script>
-  const rows = [...document.querySelectorAll('.row')];
-
-  function closeAll() {
-    for (const r of rows) {
-      r.classList.remove('open');
-      r.querySelector('.row-head').setAttribute('aria-expanded', 'false');
-    }
-  }
-
-  function openRow(row) {
-    closeAll();
-    row.classList.add('open');
-    row.querySelector('.row-head').setAttribute('aria-expanded', 'true');
-    const frame = row.querySelector('iframe[data-src]');
-    if (frame) { frame.src = frame.dataset.src; frame.removeAttribute('data-src'); }
-    row.querySelector('.row-head').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  for (const row of rows) {
-    row.querySelector('.row-head').addEventListener('click', () => {
-      row.classList.contains('open') ? closeAll() : openRow(row);
-    });
-  }
-
-  // ── 🐞 the bug: moves with arrows or WASD and opens the title it steps on ──
-  const bug = document.getElementById('bug');
-  const hint = document.getElementById('bug-hint');
-  const KEYMAP = {
-    ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0],
-    w: [0, -1], s: [0, 1], a: [-1, 0], d: [1, 0],
-  };
-  const keys = new Set();
-  const SPEED = 4.4;
-  let bx = innerWidth / 2, by = innerHeight / 2, angle = 0;
-  let lastBugOpen = 0;
-
-  addEventListener('keydown', (e) => {
-    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-    if (!KEYMAP[k] || e.metaKey || e.ctrlKey || e.altKey) return;
-    if (/^(input|textarea|select)$/i.test(e.target.tagName)) return;
-    e.preventDefault();
-    keys.add(k);
-    hint.classList.add('gone');
-  });
-  addEventListener('keyup', (e) => {
-    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-    keys.delete(k);
-  });
-  addEventListener('blur', () => keys.clear());
-
-  function checkHeads() {
-    if (performance.now() - lastBugOpen < 700) return; // let the layout settle
-    for (const row of rows) {
-      if (row.classList.contains('open')) continue;
-      const r = row.querySelector('.row-head .name').getBoundingClientRect();
-      const pad = 18; // a little air around the floating title
-      if (bx >= r.left - pad && bx <= r.right + pad && by >= r.top - pad && by <= r.bottom + pad) {
-        lastBugOpen = performance.now();
-        openRow(row);
-        return;
-      }
-    }
-  }
-
-  function step() {
-    let vx = 0, vy = 0;
-    for (const k of keys) { vx += KEYMAP[k][0]; vy += KEYMAP[k][1]; }
-    const moving = vx !== 0 || vy !== 0;
-    if (moving) {
-      const n = Math.hypot(vx, vy);
-      bx = Math.min(innerWidth - 20, Math.max(20, bx + (vx / n) * SPEED));
-      by = Math.min(innerHeight - 20, Math.max(20, by + (vy / n) * SPEED));
-      angle = Math.atan2(vx, -vy) * 180 / Math.PI;
-      checkHeads(); // only while walking: layout shifts alone never trigger anything
-    }
-    bug.classList.toggle('walking', moving);
-    bug.style.transform = `translate(${bx - 17}px, ${by - 17}px) rotate(${angle}deg)`;
-    requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-</script>
+<footer><span class="fs">✦</span> &nbsp;Valentina Sole — 2026&nbsp; <span class="fs">✦</span></footer>
 
 </body>
 </html>
