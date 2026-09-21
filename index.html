@@ -339,22 +339,80 @@
     margin-top: 28px;
   }
 
-  /* ── game ──────────────────────────────────────────────── */
+  /* ── game: the pond ────────────────────────────────────── */
   .band.dark {
     background: var(--dark);
     color: #f1eee8;
     border-top: 0;
     text-align: center;
   }
-  .press-start { font-family: var(--mono); font-size: 1.4rem; letter-spacing: .3em; margin: 34px 0 10px; }
+  .band.pond { padding-left: 0; padding-right: 0; padding-bottom: 0; }
+  .band.pond .wrap { padding: 0 24px; }
+  .band.pond .hand-note { color: var(--blue-soft); }
+  .pond-help {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #c9c5bc;
+    margin: 22px auto 0;
+    max-width: 620px;
+    line-height: 2.1;
+  }
+  .pond-help kbd {
+    font: inherit;
+    padding: 1px 6px;
+    border: 1px solid rgba(241, 238, 232, .35);
+    border-radius: 4px;
+  }
+  .pond-wrap { position: relative; margin-top: 40px; }
+  #pond {
+    display: block;
+    width: 100%;
+    height: clamp(320px, 72vh, 640px);
+    background: var(--dark);
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    cursor: crosshair;
+    outline: none;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #pond:focus-visible { box-shadow: inset 0 0 0 2px var(--blue-soft); }
+  .pond-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, .13) 2px 3px);
+  }
+  .press-start {
+    font-family: var(--mono);
+    font-size: 1.4rem;
+    letter-spacing: .3em;
+    color: #f1eee8;
+  }
+  .press-start.overlay {
+    position: absolute;
+    left: 50%;
+    top: 7%;
+    transform: translateX(-50%);
+    z-index: 1;
+    margin: 0;
+    padding: 10px 16px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    transition: color .25s;
+  }
+  .press-start.overlay:hover, .press-start.overlay:focus-visible { color: var(--blue-soft); outline: none; }
+  .press-start.overlay[hidden] { display: none; }
   .cursor {
     display: inline-block; width: .6em; height: 1.1em;
     background: currentColor; vertical-align: text-bottom;
     animation: blink 1.05s steps(1) infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
-  .game-note { font-size: .88rem; margin: 22px auto 0; max-width: 460px; line-height: 2; color: #c9c5bc; }
-  .band.dark .stamp { color: var(--blue-soft); border-color: var(--blue-soft); }
 
   footer {
     background: var(--dark);
@@ -535,12 +593,15 @@
   </section>
 
   <!-- GAME -->
-  <section class="band dark" id="game">
+  <section class="band dark pond" id="game">
     <div class="wrap">
       <h2>Game</h2>
-      <p class="press-start">PRESS START<span class="cursor" aria-hidden="true"></span></p>
-      <p class="game-note">a game will live here. we haven't picked one yet — something with books? a puzzle? ideas welcome ✎</p>
-      <p class="center"><span class="stamp">under construction</span></p>
+      <p class="hand-note">the page ends in a pond. go fish.</p>
+      <p class="pond-help"><kbd>←</kbd> <kbd>→</kbd> or move the mouse to steer the boat &nbsp;·&nbsp; <kbd>space</kbd> / click / tap to cast, again to reel in</p>
+    </div>
+    <div class="pond-wrap">
+      <canvas id="pond" tabindex="0" aria-label="Fishing game. Steer the boat with the arrow keys or the pointer, press space or tap to cast the line and catch fish."></canvas>
+      <button class="press-start overlay" id="pond-start" type="button">PRESS START<span class="cursor" aria-hidden="true"></span></button>
     </div>
   </section>
 
@@ -548,5 +609,6 @@
 
 <footer><span class="fs">✦</span> &nbsp;Valentina Sole — 2026&nbsp; <span class="fs">✦</span></footer>
 
+<script src="game.js" defer></script>
 </body>
 </html>

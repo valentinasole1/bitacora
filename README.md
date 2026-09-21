@@ -1,7 +1,7 @@
 # Sitio personal + 📖 Bitácora
 
 Sitio personal minimalista: página blanca (`index.html`) con los títulos de las secciones
-en negro, apilados uno arriba del otro — Sobre mí, Curriculum, Redes, Bitácora y Juego —
+en negro, apilados uno arriba del otro — Sobre mí, Curriculum, Redes, Bitácora y el estanque (Juego) —
 y cada título se despliega hacia abajo como acordeón. La bitácora de lecturas vive en
 `bitacora.html`, embebida en su sección.
 
@@ -28,7 +28,7 @@ La página principal está en inglés; la app de la bitácora sigue en español.
 - **Resume** — experiencia (timeline), educación + certificaciones y skills (chips), todo tomado del CV en `~/Documents/cvs/Resume.pdf`. El sello abre `assets/Valentina-Sole-CV.pdf`.
 - **Socials** — Instagram, GitHub y LinkedIn con links reales.
 - **Reading log** — la app de reseñas de libros (abajo el detalle).
-- **Game** — placeholder, juego a definir.
+- **Game** — la página termina en un estanque (`game.js`, pixel art en canvas): agua, peces, un tipo retro en un bote. Flechas / mouse mueven el bote, espacio / click / tap lanza la línea (y de nuevo la recoge); cada pez pescado suma. Mejor puntaje en `localStorage`; solo anima mientras está en pantalla.
 
 ## Qué hace la bitácora
 
