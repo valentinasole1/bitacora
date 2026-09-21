@@ -164,25 +164,33 @@
     width: min(230px, 60vw);
     aspect-ratio: 3 / 4;
     border-radius: 50%;
-    background: linear-gradient(160deg, #d9d5cc, #96917f 70%, #6f6a5e);
-    display: grid;
-    place-items: center;
-    color: #f4f1e9;
-    font-size: .8rem;
+    display: block;
+    object-fit: cover;
+    object-position: 36% 50%; /* photo-5096; use 50% 88% for photo-5092 */
     filter: grayscale(1);
   }
   .about-text p { line-height: 2.05; font-size: .92rem; color: var(--ink-soft); }
   .about-text p + p { margin-top: 1.1em; }
 
   /* ── resume ────────────────────────────────────────────── */
+  .cv-summary {
+    max-width: 720px;
+    margin: 18px 0 40px;
+    line-height: 2;
+    font-size: .92rem;
+    color: var(--ink-soft);
+  }
   .cv-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
     gap: 26px;
     margin-top: 10px;
+    align-items: start;
   }
+  .cv-side { display: grid; gap: 26px; }
+  @media (max-width: 760px) { .cv-grid { grid-template-columns: 1fr; } }
   .cv-block {
-    border: 1.5px dashed rgba(28, 27, 25, .35);
+    border: 1.5px solid rgba(28, 27, 25, .22);
     border-radius: 6px;
     padding: 22px 24px 26px;
     background: rgba(255, 255, 255, .25);
@@ -194,8 +202,85 @@
     letter-spacing: .22em;
     margin-bottom: 16px;
   }
-  .ghost-line { height: 9px; background: currentColor; opacity: .09; border-radius: 3px; margin: 10px 0; }
-  .ghost-line.short { width: 55%; }
+  .timeline { list-style: none; }
+  .timeline > li {
+    position: relative;
+    padding: 0 0 26px 22px;
+    border-left: 1.5px solid var(--hair);
+  }
+  .timeline > li:last-child { padding-bottom: 4px; }
+  .timeline > li::before {
+    content: "";
+    position: absolute;
+    left: -6px; top: 8px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--cream-2);
+    border: 2px solid var(--blue);
+  }
+  .timeline > li:first-child::before { background: var(--blue); }
+  .when {
+    display: block;
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+  .timeline h4, .edu h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 1.3;
+  }
+  .at { font-family: var(--sans); font-weight: 400; font-size: .82rem; color: var(--ink-soft); white-space: nowrap; }
+  .timeline ul, .edu ul { list-style: none; margin-top: 10px; }
+  .timeline ul li, .edu ul li {
+    position: relative;
+    padding-left: 14px;
+    margin: 6px 0;
+    font-size: .86rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+  .timeline ul li::before, .edu ul li::before {
+    content: "–";
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--blue);
+  }
+  .edu p { font-size: .86rem; line-height: 1.75; color: var(--ink-soft); margin-top: 8px; }
+  .edu h5 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 22px 0 6px;
+  }
+  .skill-group + .skill-group { margin-top: 18px; }
+  .skill-group h5 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chips span {
+    font-size: .74rem;
+    font-weight: 400;
+    letter-spacing: .03em;
+    padding: 5px 11px;
+    border: 1px solid rgba(36, 53, 110, .35);
+    border-radius: 999px;
+    color: var(--ink);
+    background: rgba(255, 255, 255, .35);
+  }
   .stamp {
     display: inline-block;
     border: 2px solid var(--blue);
@@ -208,7 +293,10 @@
     transform: rotate(-4deg);
     border-radius: 50% / 48%;
     margin-top: 34px;
+    text-decoration: none;
+    transition: transform .25s, background .25s, color .25s;
   }
+  a.stamp:hover { transform: rotate(-4deg) scale(1.04); background: var(--blue); color: var(--cream); }
   .center { text-align: center; }
 
   /* ── socials ───────────────────────────────────────────── */
@@ -313,11 +401,11 @@
   <section class="band" id="about">
     <div class="wrap about-grid">
       <div class="photo-cluster">
-        <div class="photo-oval">your photo here ✎</div>
+        <img class="photo-oval" src="assets/photo-5096.jpg" alt="Portrait of Valentina">
       </div>
       <div class="about-text">
         <h2>About me,</h2>
-        <p>I'm Valentina — [your role / what you do], based in [your city]. I like understanding how things work, <span class="u">and then making them work better</span>.</p>
+        <p>I'm Valentina — a Data &amp; AI engineer with a biomedical engineering degree and an operations past, based in Buenos Aires, Argentina. I like understanding how things work, <span class="u">and then making them work better</span>.</p>
         <p>Off the clock you'll usually find me with a book — the <a class="u" href="#reading-log" style="color:inherit;text-decoration:none">reading log below</a> keeps the receipts. <span class="u">I believe continuous learning is the key</span>, and this site is my little corner to practice it: part portfolio, part playground, always under construction.</p>
       </div>
     </div>
@@ -327,26 +415,95 @@
   <section class="band alt" id="resume">
     <div class="wrap">
       <h2>Resume</h2>
-      <p class="hand-note">the official story — coming soon</p>
+      <p class="hand-note">the official story</p>
+      <p class="cv-summary">Data &amp; AI engineer with a biomedical engineering degree who started on the operations side. After more than a year running AI deployments for clients at Darwin AI, I moved to the Data &amp; AI team, where I build and operate the platform the company runs on: Dagster pipelines, dbt models on Snowflake, reverse ETL to HubSpot and LLM-based internal tooling. I bring the rigor of a field where data integrity is non-negotiable, <span class="u">and the client-side experience to model what teams actually need</span>.</p>
+
       <div class="cv-grid">
         <div class="cv-block">
           <h3>EXPERIENCE_</h3>
-          <div class="ghost-line"></div>
-          <div class="ghost-line short"></div>
-          <div class="ghost-line"></div>
+          <ol class="timeline">
+            <li>
+              <span class="when">Jul 2026 — Present</span>
+              <h4>Data &amp; AI Engineer <span class="at">· Darwin AI</span></h4>
+              <ul>
+                <li>Build and run Darwin's data platform: self-hosted Dagster (OSS) on AWS orchestrating a 400+ model dbt project over 38 sources on Snowflake, with scheduled jobs, run-status sensors and Slack alerting.</li>
+                <li>Design and ship dbt models end to end (staging → facts, dimensions, marts) with data quality tests, docs, snapshots, incremental models and seeds.</li>
+                <li>Built the customer effort score: a dbt model ranking 12 normalized signals per account, weekly snapshots, reverse ETL into HubSpot and an MCP tool exposing it to AI agents.</li>
+                <li>Hardened reverse ETL (per-destination assets, retries with backoff, aggregated failure alerts) and shipped Slack alerts for executives plus a weekly adoption leaderboard.</li>
+                <li>Build and maintain internal AI agents, skills and MCP tools adopted by Operations, Sales and Finance, and Metabase dashboards on usage, adoption and revenue.</li>
+              </ul>
+            </li>
+            <li>
+              <span class="when">Aug 2025 — Jul 2026</span>
+              <h4>AI Operations Lead <span class="at">· Darwin AI</span></h4>
+              <ul>
+                <li>Promoted for client management and process optimization; led a team of 10+ people in Operations.</li>
+                <li>Owned a portfolio of client accounts end to end (onboarding, adoption and retention of deployed AI agents), running weekly health checks and business reviews and flagging churn-risk signals early.</li>
+                <li>Kept client data accurate through validation protocols, quality controls and KPI dashboards reported to leadership with corrective actions.</li>
+              </ul>
+            </li>
+            <li>
+              <span class="when">Mar 2025 — Aug 2025</span>
+              <h4>AI Operations Executive <span class="at">· Darwin AI</span></h4>
+              <ul>
+                <li>Audited client implementation data for consistency and model performance, validated new functionalities before deployment and gave technical support on the AI built.</li>
+              </ul>
+            </li>
+            <li>
+              <span class="when">May 2024 — Nov 2024</span>
+              <h4>Operations Intern <span class="at">· Amcor Rigid Packaging</span></h4>
+              <ul>
+                <li>Designed validation scripts and dashboards to catch and correct data inconsistencies in production metrics; supported quality control by monitoring process deviations.</li>
+              </ul>
+            </li>
+            <li>
+              <span class="when">Jul 2023 — Dec 2023</span>
+              <h4>Pediatric ICU room-pass digitization <span class="at">· Hospital Universitario Austral</span></h4>
+              <ul>
+                <li>Worked with clinical staff to ensure data accuracy during the digitization of patient room processes; validated backend data integrity and compliance with hospital information standards.</li>
+              </ul>
+            </li>
+          </ol>
         </div>
-        <div class="cv-block">
-          <h3>EDUCATION_</h3>
-          <div class="ghost-line short"></div>
-          <div class="ghost-line"></div>
-        </div>
-        <div class="cv-block">
-          <h3>SKILLS_</h3>
-          <div class="ghost-line"></div>
-          <div class="ghost-line short"></div>
+
+        <div class="cv-side">
+          <div class="cv-block edu">
+            <h3>EDUCATION_</h3>
+            <span class="when">Jan 2021 — Dec 2025</span>
+            <h4>Degree in Biomedical Engineering</h4>
+            <p>Universidad Austral, Buenos Aires.<br>Thesis: hypoxia markers vs PD-L1 expression in TCGA lung cancer cohorts (LUAD/LUSC), in R.</p>
+            <h5>Certifications &amp; courses</h5>
+            <ul>
+              <li>dbt Fundamentals — dbt Labs, 2026</li>
+              <li>Dagster Essentials, Dagster &amp; ETL, Dagster &amp; dbt — Dagster Labs, 2026</li>
+              <li>Database Design and Basic SQL in PostgreSQL — University of Michigan via Coursera, 2026</li>
+              <li>Deep Learning: Neural Networks from Scratch — UTN FRBA, 2025</li>
+              <li>Cambridge First Certificate (FCE)</li>
+            </ul>
+          </div>
+
+          <div class="cv-block">
+            <h3>SKILLS_</h3>
+            <div class="skill-group">
+              <h5>Data engineering</h5>
+              <div class="chips"><span>Dagster</span><span>dbt</span><span>Snowflake</span><span>PostgreSQL</span><span>SQL</span><span>Python · pandas</span><span>ELT pipelines</span><span>AWS · S3 / EC2 / RDS</span><span>Docker</span><span>Git / GitHub</span><span>pytest</span></div>
+            </div>
+            <div class="skill-group">
+              <h5>Analytics &amp; AI tooling</h5>
+              <div class="chips"><span>Metabase</span><span>KPI &amp; dashboard design</span><span>HubSpot data model &amp; API</span><span>Slack API</span><span>PostHog</span><span>LLM agents &amp; MCP servers (Claude)</span><span>Prompt evaluation</span></div>
+            </div>
+            <div class="skill-group">
+              <h5>Programming &amp; ML</h5>
+              <div class="chips"><span>Python</span><span>R</span><span>Java</span><span>MongoDB</span><span>Machine learning</span><span>TensorFlow</span><span>OpenCV</span><span>Biomedical image processing</span><span>Computational modeling</span><span>NumPy / SciPy</span></div>
+            </div>
+            <div class="skill-group">
+              <h5>Languages</h5>
+              <div class="chips"><span>Spanish · native</span><span>English · full professional</span><span>Italian · elementary</span></div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="center"><span class="stamp">under construction</span></p>
+      <p class="center"><a class="stamp" href="assets/Valentina-Sole-CV.pdf" target="_blank" rel="noopener">view the pdf ↗</a></p>
     </div>
   </section>
 

@@ -24,9 +24,9 @@ hasta pisar un título. En celular el bicho se esconde y queda el tap.
 
 La página principal está en inglés; la app de la bitácora sigue en español.
 
-- **About me** — nota de papel rasgado + polaroid (falta foto, rol y ciudad).
-- **Resume** — placeholder, en construcción.
-- **Socials** — Instagram y LinkedIn con links reales; falta el usuario de GitHub.
+- **About me** — nota de papel rasgado + foto (`assets/photo-5096.jpg`). Rol y ciudad tomados del CV.
+- **Resume** — experiencia (timeline), educación + certificaciones y skills (chips), todo tomado del CV en `~/Documents/cvs/Resume.pdf`. El sello abre `assets/Valentina-Sole-CV.pdf`.
+- **Socials** — Instagram, GitHub y LinkedIn con links reales.
 - **Reading log** — la app de reseñas de libros (abajo el detalle).
 - **Game** — placeholder, juego a definir.
 
