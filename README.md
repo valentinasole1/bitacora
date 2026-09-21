@@ -15,10 +15,6 @@ python3 -m http.server 4173
 
 (También funciona abriendo `index.html` directo en el navegador.)
 
-## Navegación
-
-Los títulos se abren con click, o **paseando el bicho 🐞** (flechas del teclado o WASD)
-hasta pisar un título. En celular el bicho se esconde y queda el tap.
 
 ## Secciones
 
