@@ -1,7 +1,7 @@
 # Sitio personal + 📖 Bitácora
 
 Sitio personal minimalista: página blanca (`index.html`) con los títulos de las secciones
-en negro, apilados uno arriba del otro — Sobre mí, Curriculum, Redes, Bitácora y el estanque (Juego) —
+en negro, apilados uno arriba del otro — About me, Resume, Socials, Reading log y Game (el estanque) —
 y cada título se despliega hacia abajo como acordeón. La bitácora de lecturas vive en
 `bitacora.html`, embebida en su sección.
 
